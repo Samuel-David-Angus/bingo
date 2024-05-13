@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bingo</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .marked {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Game code: <span th:text="${gamecode}"></span></h1>
+<form id="newGameForm" action="/newGame" method="post">
+    <button type="submit">New Game</button>
+</form>
+<table>
+    <tbody>
+     <tr>
+         <th>B</th>
+         <td th:each="colNumber : ${#numbers.sequence(1, 15)}" th:text="${colNumber}"
+             th:class="${#lists.contains(pool, colNumber)} ? '' : 'marked'"></td>
+     </tr>
+     <tr>
+         <th>I</th>
+         <td th:each="colNumber : ${#numbers.sequence(16, 30)}" th:text="${colNumber}"
+             th:class="${#lists.contains(pool, colNumber)} ? '' : 'marked'"></td>
+     </tr>
+     <tr>
+         <th>N</th>
+         <td th:each="colNumber : ${#numbers.sequence(31, 45)}" th:text="${colNumber}"
+             th:class="${#lists.contains(pool, colNumber)} ? '' : 'marked'"></td>
+     </tr>
+     <tr>
+         <th>G</th>
+         <td th:each="colNumber : ${#numbers.sequence(46, 60)}" th:text="${colNumber}"
+             th:class="${#lists.contains(pool, colNumber)} ? '' : 'marked'"></td>
+     </tr>
+     <tr>
+         <th>O</th>
+         <td th:each="colNumber : ${#numbers.sequence(61, 75)}" th:text="${colNumber}"
+             th:class="${#lists.contains(pool, colNumber)} ? '' : 'marked'"></td>
+     </tr>
+    </tbody>
+</table>
+<form id="rollGameForm" action="/roll" method="post">
+    <input type="hidden" name="gamecode" th:value="${gamecode}">
+    <input type="submit" value="Roll game">
+</form>
+</body>
+</html>
