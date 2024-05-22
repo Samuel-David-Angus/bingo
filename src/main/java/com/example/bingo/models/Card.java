@@ -4,22 +4,22 @@ import com.example.bingo.converters.HashMapConverter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 @Entity
 @Data
 @Table(name = "Card")
+@NoArgsConstructor
 public class Card {
     @Id
     @Column(name = "playcard_token")
-    private String playcard_token;
+    private String playcardToken;
     @JsonIgnore
     @ManyToOne
     private Game game;
+    @JsonIgnore
     private String cardJSON;
     @Convert(converter = HashMapConverter.class)
     private Map<Character, List<Integer>> card;
@@ -28,6 +28,7 @@ public class Card {
         Random random = new Random();
         List<Integer> pool = new ArrayList<Integer>();
         String bingo = "BINGO";
+        card = new HashMap<>();
 
         for (int i = 1; i <= 75; i++) {
             pool.add(i);
